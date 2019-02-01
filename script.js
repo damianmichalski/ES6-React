@@ -62,7 +62,7 @@ class Stopwatch extends React.Component {
     clearInterval(this.watch);
   }
 
-  resetwatch() {
+  resetWatch() {
     this.running = false;
     this.reset();
     clearInterval(this.watch);
@@ -89,9 +89,11 @@ class Stopwatch extends React.Component {
             <a href="#" onClick={this.clear.bind(this)}>Clear</a>
           </nav>
           <div className={'stopwatch'}>
-            {this.format(this.state.times)}</div>
+            {this.format(this.state.times)}
+          </div>
           <ul className={'results'}>
-            {this.state.results.map(result => <li>{result}</li>)}</ul>
+            {this.state.results.map(result => <li>{result}</li>)}
+          </ul>
         </div>
     )
   }
