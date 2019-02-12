@@ -2,6 +2,8 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -40,9 +42,14 @@ var Stopwatch = function (_React$Component) {
       });
     }
   }, {
-    key: 'format',
-    value: function format(times) {
-      return pad0(times.minutes) + ':' + pad0(times.seconds) + ':' + pad0(Math.floor(times.miliseconds));
+    key: 'getDateFormat',
+    value: function getDateFormat() {
+      var _state$times = this.state.times,
+          minutes = _state$times.minutes,
+          seconds = _state$times.seconds,
+          miliseconds = _state$times.miliseconds;
+
+      return pad0(minutes) + ':' + pad0(seconds) + ':' + pad0(Math.floor(miliseconds));
     }
   }, {
     key: 'start',
@@ -65,10 +72,10 @@ var Stopwatch = function (_React$Component) {
   }, {
     key: 'calculate',
     value: function calculate() {
-      var _state$times = this.state.times,
-          minutes = _state$times.minutes,
-          seconds = _state$times.seconds,
-          miliseconds = _state$times.miliseconds;
+      var _state$times2 = this.state.times,
+          minutes = _state$times2.minutes,
+          seconds = _state$times2.seconds,
+          miliseconds = _state$times2.miliseconds;
 
       miliseconds += 1;
       if (miliseconds >= 100) {
@@ -94,8 +101,8 @@ var Stopwatch = function (_React$Component) {
       clearInterval(this.watch);
     }
   }, {
-    key: 'resetwatch',
-    value: function resetwatch() {
+    key: 'resetWatch',
+    value: function resetWatch() {
       this.running = false;
       this.reset();
       clearInterval(this.watch);
@@ -103,8 +110,10 @@ var Stopwatch = function (_React$Component) {
   }, {
     key: 'save',
     value: function save() {
-      var results = this.state.results.slice();
-      results.push(this.format(this.state.times));
+      // const results = this.state.results.slice();
+      // results.push(this.format(this.state.times));
+      // this.setState({results: results});
+      var results = [].concat(_toConsumableArray(this.state.results), [this.getDateFormat()]);
       this.setState({ results: results });
     }
   }, {
@@ -150,7 +159,7 @@ var Stopwatch = function (_React$Component) {
         React.createElement(
           'div',
           { className: 'stopwatch' },
-          this.format(this.state.times)
+          this.getDateFormat()
         ),
         React.createElement(
           'ul',

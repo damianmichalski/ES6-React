@@ -21,8 +21,9 @@ class Stopwatch extends React.Component {
     })
   }
 
-  format(times) {
-    return `${pad0(times.minutes)}:${pad0(times.seconds)}:${pad0(Math.floor(times.miliseconds))}`;
+  getDateFormat() {
+    const { minutes, seconds, miliseconds } = this.state.times;
+    return `${pad0(minutes)}:${pad0(seconds)}:${pad0(Math.floor(miliseconds))}`;
   }
 
   start() {
@@ -69,9 +70,11 @@ class Stopwatch extends React.Component {
   }
 
   save() {
-    const results = this.state.results.slice();
-    results.push(this.format(this.state.times));
-    this.setState({results: results});
+    // const results = this.state.results.slice();
+    // results.push(this.format(this.state.times));
+    // this.setState({results: results});
+    const results = [...this.state.results, this.getDateFormat()];
+    this.setState ({ results })
   }
 
   clear() {
@@ -89,7 +92,7 @@ class Stopwatch extends React.Component {
             <a href="#" onClick={this.clear.bind(this)}>Clear</a>
           </nav>
           <div className={'stopwatch'}>
-            {this.format(this.state.times)}
+            {this.getDateFormat()}
           </div>
           <ul className={'results'}>
             {this.state.results.map(result => <li>{result}</li>)}
